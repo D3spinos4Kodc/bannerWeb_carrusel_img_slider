@@ -1,232 +1,297 @@
-/* Reset básico para eliminar márgenes y paddings predeterminados */
+:root {
+  --slider-duration: 5s;
+  --orbit-radius: 75px;
+  --planet-size: 15px;
+  --earth-size: 50px;
+}
+
+/* Reset basico para eliminar margenes y paddings predeterminados */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Configuracion del cuerpo para ocupar toda la pantalla */
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* Contenedor principal del carrusel */
+main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+/* Estilo basico para cada elemento del carrusel */
+.elemento {
+  width: 200px;
+  height: 300px;
+  list-style-type: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+  box-shadow: 0 20px 30px rgba(255, 255, 255, 0.471) inset;
+  transition: transform 0.75s ease-out, left 0.75s ease-out, top 0.75s ease-out, width 0.75s ease-out, height 0.75s ease-out, opacity 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.elemento:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  background-position: center;
+  background-size: cover;
+  transition: transform 1s ease-out, filter 1s ease-out;
+  z-index: -1;
+}
+
+.elemento:nth-child(1), .elemento:nth-child(2) {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 1;
+}
+
+.elemento:nth-child(1) {
+  z-index: 0;
+}
+
+.elemento:nth-child(1):before {
+  transform: scale(1.15);
+  filter: blur(4px);
+}
+
+.elemento:nth-child(2):before {
+  transform: scale(1);
+  filter: blur(0);
+}
+
+.elemento:nth-child(3) { left: 60%; }
+.elemento:nth-child(4) { left: calc(60% + 220px); }
+.elemento:nth-child(5) { left: calc(60% + 440px); }
+.elemento:nth-child(6) { left: calc(60% + 660px); opacity: 0; }
+
+.contenido {
+  width: min(40vw,900px);
+  position: absolute;
+  top: 50%;
+  left: 8rem;
+  transform: translateY(-50%);
+  font: 400 0.85rem helvetica,sans-serif;
+  color: white;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  opacity: 0;
+  display: none;
+  z-index: 2;
+}
+
+.contenido .titulo {
+  font-family: 'arial-black';
+  text-transform: uppercase;
+  font-size: 4rem;
+}
+
+.contenido .descripcion {
+  line-height: 1.7;
+  margin: 1rem 0 1.5rem;
+  font-size: 1.6rem;
+}
+
+.contenido button {
+  width: fit-content;
+  background-color: rgba(0,0,0,0.1);
+  color: white;
+  border: 2px solid white;
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  font-size: 1.2rem;
+}
+
+.contenido button:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.elemento:nth-of-type(2) .contenido {
+  display: block;
+  animation: show 0.6s ease-in-out 0.5s forwards;
+}
+
+@keyframes show {
+  0% {
+    filter: blur(5px);
+    transform: translateY(calc(-30% + 75px));
   }
-  
-  /* Configuración del cuerpo para ocupar toda la pantalla */
-  body {
-    height: 100vh;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-  }
-  
-  /* Contenedor principal del carrusel */
-  main {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-    overflow: hidden; /* Oculta elementos que se salen del contenedor */
-  }
-  
-  /* Estilo básico para cada ítem del carrusel */
-  .item {
-    width: 200px;
-    height: 300px;
-    list-style-type: none;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-    background-position: center;
-    background-size: cover;
-    border-radius: 20px;
-    box-shadow: 0 20px 30px rgba(255, 255, 255, 0.471) inset;
-    /* Transiciones generales para posición y tamaño */
-    transition: transform 0.75s ease-out, left 0.75s ease-out, top 0.75s ease-out, width 0.75s ease-out, height 0.75s ease-out, opacity 0.5s ease-in-out;
-    overflow: hidden;
-  }
-  
-  /* Pseudo-elemento para crear el efecto de expansión/contracción de la imagen backgroun banner*/
-  .item:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    background-position: center;
-    background-size: cover;
-    transition: transform 1s ease-out, filter 1s ease-out;
-    z-index: -1;
-  }
-  
-  /* Estilos para las imágenes principal y secundaria (fondo) */
-  .item:nth-child(1), .item:nth-child(2) {
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    transform: none;
-    border-radius: 0;
-    box-shadow: none;
+  100% {
     opacity: 1;
-  }
-  
-  /* La primera imagen actúa como fondo difuminado */
-  .item:nth-child(1) {
-    z-index: 0;
-  }
-  
-  /* Estado inicial del fondo (imagen anterior) - ligeramente expandido y difuminado */
-  .item:nth-child(1):before {
-    transform: scale(1.15);
-    filter: blur(4px);
-  }
-  
-  /* Estado inicial de la imagen principal - tamaño normal sin difuminado */
-  .item:nth-child(2):before {
-    transform: scale(1);
     filter: blur(0);
   }
+}
+
+.carrusel.transicionando .elemento:nth-child(1):before {
+  filter: blur(4px);
+  transform: scale(1);
+  transition: transform 0.4s ease-out, filter 0s ease-out;
+}
+
+.carrusel.transicionando .elemento:nth-child(2):before {
+  transform: scale(1.02);
+  filter: blur(2px);
+  transition: transform 0.9s ease-out, filter 0.9s ease-out;
+}
+
+.navegacion {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  user-select: none;
+}
+
+.navegacion .btn {
+  background-color: rgba(255, 255, 255, 0.159);
+  color: rgba(0,0,0,0.7);
+  border: 2px solid rgba(0, 0, 0, 0.173);
+  margin: 0 0.25rem;
+  padding: 0.75rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navegacion .btn:hover {
+  background-color: rgba(255,255,255,0.7);
+  transform: scale(1.2);
+}
+
+@media (width > 650px) and (width < 900px) {
+  .contenido .titulo { font-size: 1rem; }
+  .contenido .descripcion { font-size: 0.7rem; }
+  .contenido button { font-size: 0.7rem; }
   
-  /* Posicionamiento de las imágenes en miniatura a la derecha */
-  .item:nth-child(3) { left: 60%; }
-  .item:nth-child(4) { left: calc(60% + 220px); }
-  .item:nth-child(5) { left: calc(60% + 440px); }
-  .item:nth-child(6) { left: calc(60% + 660px); opacity: 0; }
-  
-  /* Estilos para el contenido de texto sobre la imagen */
-  .content {
-    width: min(40vw,900px);
-    position: absolute;
-    top: 50%;
-    left: 8rem;
-    transform: translateY(-50%);
-    font: 400 0.85rem helvetica,sans-serif;
-    color: white;
-    text-shadow: 0 3px 8px rgba(0,0,0,0.5);
-    opacity: 0;
-    display: none;
-    z-index: 2; /* Asegura que el texto esté por encima de la imagen */
+  .elemento {
+    width: 160px;
+    height: 270px;
   }
   
-  /* Estilos para el título dentro del contenido */
-  .content .title {
-    font-family: 'arial-black';
-    text-transform: uppercase;
-    font-size: 4rem;
+  .elemento:nth-child(3) { left: 50%; }
+  .elemento:nth-child(4) { left: calc(50% + 170px); }
+  .elemento:nth-child(5) { left: calc(50% + 340px); }
+  .elemento:nth-child(6) { left: calc(50% + 510px); opacity: 0; }
+}
+
+@media (width < 650px) {
+  .contenido .titulo { font-size: 0.9rem; }
+  .contenido .descripcion { font-size: 0.65rem; }
+  .contenido button { font-size: 0.7rem; }
+  
+  .elemento {
+    width: 130px;
+    height: 220px;
   }
   
-  /* Estilos para la descripción dentro del contenido */
-  .content .description {
-    line-height: 1.7;
-    margin: 1rem 0 1.5rem;
-    font-size: 1.6rem;
-  }
-  
-  /* Estilos para el botón dentro del contenido */
-  .content button {
-    width: fit-content;
-    background-color: rgba(0,0,0,0.1);
-    color: white;
-    border: 2px solid white;
-    border-radius: 0.25rem;
-    padding: 0.75rem;
-    cursor: pointer;
-    transition: all 0.5s ease;
-    font-size: 1.2rem;
-  }
-  
-  /* Efecto hover para el botón */
-  .content button:hover {
-    background-color: rgba(255,255,255,0.2);
-  }
-  
-  /* Muestra el contenido de texto solo en la imagen activa */
-  .item:nth-of-type(2) .content {
-    display: block;
-    animation: show 0.6s ease-in-out 0.5s forwards;
-  }
-  
-  /* Animación para mostrar el contenido */
-  @keyframes show {
-    0% {
-      filter: blur(5px);
-      transform: translateY(calc(-30% + 75px));
-    }
-    100% {
-      opacity: 1;
-      filter: blur(0);
-    }
-  }
-  
-  /* Efecto durante la transición - Imagen anterior (expandirse más y difuminarse más) */
-  .slider.transitioning .item:nth-child(1):before {
-    filter: blur(4px);  /* Más blur para mayor efecto de difuminado */
-    transform: scale(1); /* Expansión Suave */
-    transition: transform 0.4s ease-out, filter 0s ease-out; /* Transición más rápida */
-  }
-  
-  /* Efecto durante la transición - Imagen nueva (crecer desde un tamaño más pequeño) */
-  .slider.transitioning .item:nth-child(2):before {
-    transform: scale(1.02); /* Ligera expansión para dar sensación de movimiento */
-    filter: blur(2px);
-    transition: transform 0.9s ease-out, filter 0.9s ease-out; /* Transición más rápida */
-  }
-  
-  /* Estilos para los controles de navegación */
-  .nav {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-    user-select: none;
-  }
-  
-  /* Estilos para los botones de navegación */
-  .nav .btn {
-    background-color: rgba(255, 255, 255, 0.159);
-    color: rgba(0,0,0,0.7);
-    border: 2px solid rgba(0, 0, 0, 0.173);
-    margin: 0 0.25rem;
-    padding: 0.75rem;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  /* Efecto hover para los botones de navegación */
-  .nav .btn:hover {
-    background-color: rgba(255,255,255,0.7);
-    transform: scale(1.2);
-  }
-  
-  /* Estilos responsivos para pantallas medianas */
-  @media (width > 650px) and (width < 900px) {
-    .content .title { font-size: 1rem; }
-    .content .description { font-size: 0.7rem; }
-    .content button { font-size: 0.7rem; }
-    
-    .item {
-      width: 160px;
-      height: 270px;
-    }
-    
-    .item:nth-child(3) { left: 50%; }
-    .item:nth-child(4) { left: calc(50% + 170px); }
-    .item:nth-child(5) { left: calc(50% + 340px); }
-    .item:nth-child(6) { left: calc(50% + 510px); opacity: 0; }
-  }
-  
-  /* Estilos responsivos para pantallas pequeñas */
-  @media (width < 650px) {
-    .content .title { font-size: 0.9rem; }
-    .content .description { font-size: 0.65rem; }
-    .content button { font-size: 0.7rem; }
-    
-    .item {
-      width: 130px;
-      height: 220px;
-    }
-    
-    .item:nth-child(3) { left: 50%; }
-    .item:nth-child(4) { left: calc(50% + 140px); }
-    .item:nth-child(5) { left: calc(50% + 280px); }
-    .item:nth-child(6) { left: calc(50% + 420px); opacity: 0; }
-  }
+  .elemento:nth-child(3) { left: 50%; }
+  .elemento:nth-child(4) { left: calc(50% + 140px); }
+  .elemento:nth-child(5) { left: calc(50% + 280px); }
+  .elemento:nth-child(6) { left: calc(50% + 420px); opacity: 0; }
+}
+/* Loader sobre el slider */
+.loader {
+  position: absolute;
+  top: 1rem; left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--orbit-radius) * 2);
+  height: calc(var(--orbit-radius) * 2);
+  perspective: 400px;
+  z-index: 10;
+}
+
+/* Planeta central estático */
+.loader .planeta-central {
+  position: absolute;
+  width: var(--earth-size);
+  height: var(--earth-size);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #007BFF;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(0,123,255,0.6);
+  z-index: 5;
+}
+
+/* Contenedor de órbitas (sin animar) */
+.loader .orbita {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* Cada órbita 3D se anima girando */
+.loader .orbita3d {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  animation: orbitar var(--slider-duration) linear infinite;
+  transform-origin: center center;
+}
+
+/* Inclinaciones distintas */
+.loader .orb1 { transform: rotateX(60deg); }
+.loader .orb2 { transform: rotateX(30deg); }
+.loader .orb3 { transform: rotateX(75deg); }
+
+/* El satélite que recorre cada órbita */
+.loader .satelite {
+  position: absolute;
+  width: var(--planet-size);
+  height: var(--planet-size);
+  top: 50%; left: calc(50% + var(--orbit-radius));
+  transform: translate(-50%, -50%);
+  background: #FFF;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255,255,255,0.8);
+  z-index: 6;
+}
+
+/* Pulso de cada satélite */
+.loader .satelite::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: inherit;
+  animation: pulse var(--slider-duration) ease-out infinite;
+}
+
+@keyframes orbitar {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1);   opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}

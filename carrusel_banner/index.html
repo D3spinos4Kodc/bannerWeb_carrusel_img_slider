@@ -1,78 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Carrusel Banner </title>
+    <title>Carrusel Espacial</title>
 </head>
 <body>
     <main>
-        <ul class='slider'>
-          <li class='item' style="background-image: url('https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg')">
-            <div class='content'>
-              <h2 class='title'>"Lossless Youths"</h2>
-              <p class='description'> Lorem ipsum, dolor sit amet consectetur
+      <!-- Loader 3D encima del carrusel -->
+    <div class="loader">
+      <!-- Planeta central -->
+      <div class="planeta-central"></div>
+      <!-- Envoltura general (sin animación) -->
+      <div class="orbita">
+        <!-- Tres órbitas 3D -->
+        <div class="orbita3d orb1"><div class="satelite"></div></div>
+        <div class="orbita3d orb2"><div class="satelite"></div></div>
+        <div class="orbita3d orb3"><div class="satelite"></div></div>
+      </div>
+    </div>
+    
+        <ul class='carrusel'>
+          <li class='elemento' style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+            <div class='contenido'>
+              <h2 class='titulo'>"Galaxia Perdida"</h2>
+              <p class='descripcion'> Lorem ipsum, dolor sit amet consectetur
               adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
               praesentium nisi. Id laboriosam ipsam enim.  </p>
-              <button>Read More</button>
+              <button>Leer Más</button>
             </div>
           </li>
-          <li class='item' style="background-image: url('https://i.redd.it/tc0aqpv92pn21.jpg')">
-            <div class='content'>
-              <h2 class='title'>"Estrange Bond"</h2>
-              <p class='description'> Lorem ipsum, dolor sit amet consectetur
+          <li class='elemento' style="background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+            <div class='contenido'>
+              <h2 class='titulo'>"Nebulosa Azul"</h2>
+              <p class='descripcion'> Lorem ipsum, dolor sit amet consectetur
               adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
               praesentium nisi. Id laboriosam ipsam enim.  </p>
-              <button>Read More</button>
+              <button>Leer Más</button>
             </div>
           </li>
-          <li class='item' style="background-image: url('https://wharferj.files.wordpress.com/2015/11/bio_north.jpg')">
-            <div class='content'>
-              <h2 class='title'>"The Gate Keeper"</h2>
-              <p class='description'> Lorem ipsum, dolor sit amet consectetur
+          <li class='elemento' style="background-image: url('https://images.unsplash.com/photo-1454789548928-9efd52dc4031?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+            <div class='contenido'>
+              <h2 class='titulo'>"Agujero Negro"</h2>
+              <p class='descripcion'> Lorem ipsum, dolor sit amet consectetur
               adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
               praesentium nisi. Id laboriosam ipsam enim.  </p>
-              <button>Read More</button>
+              <button>Leer Más</button>
             </div>
           </li>
-          <li class='item' style="background-image: url('https://images7.alphacoders.com/878/878663.jpg')">
-            <div class='content'>
-              <h2 class='title'>"Last Trace Of Us"</h2>
-              <p class='description'>
+          <li class='elemento' style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+            <div class='contenido'>
+              <h2 class='titulo'>"Vía Láctea"</h2>
+              <p class='descripcion'>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
               </p>
-              <button>Read More</button>
+              <button>Leer Más</button>
             </div>
           </li>
-          <li class='item' style="background-image: url('https://theawesomer.com/photos/2017/07/simon_stalenhag_the_electric_state_6.jpg')">
-            <div class='content'>
-              <h2 class='title'>"Urban Decay"</h2>
-              <p class='description'>
+          <li class='elemento' style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+            <div class='contenido'>
+              <h2 class='titulo'>"Planeta Rojo"</h2>
+              <p class='descripcion'>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
               </p>
-              <button>Read More</button>
+              <button>Leer Más</button>
             </div>
           </li>
-          <li class='item' style="background-image: url('https://da.se/app/uploads/2015/09/simon-december1994.jpg')">
-            <div class='content'>
-              <h2 class='title'>"The Migration"</h2>
-              <p class='description'> Lorem ipsum, dolor sit amet consectetur
+          <li class='elemento' style="background-image: url('https://images.unsplash.com/photo-1506443432602-ac2fcd6f54e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+            <div class='contenido'>
+              <h2 class='titulo'>"Estrellas Lejanas"</h2>
+              <p class='descripcion'> Lorem ipsum, dolor sit amet consectetur
               adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
               praesentium nisi. Id laboriosam ipsam enim.  </p>
-              <button>Read More</button>
+              <button>Leer Más</button>
             </div>
           </li>
         </ul>
-        <nav class='nav'>
-          <ion-icon class='btn prev' name="arrow-back-outline"></ion-icon>
-          <ion-icon class='btn next' name="arrow-forward-outline"></ion-icon>
+        <nav class='navegacion'>
+          <ion-icon class='btn anterior' name="arrow-back-outline"></ion-icon>
+          <ion-icon class='btn siguiente' name="arrow-forward-outline"></ion-icon>
         </nav>
-      </main>
-      
-      <script src="app.js"></script>
-      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+    </main>
+      
+    <script src="app.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
