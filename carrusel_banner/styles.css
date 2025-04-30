@@ -1,8 +1,10 @@
 :root {
-  --slider-duration: 5s;
-  --orbit-radius: 75px;
-  --planet-size: 15px;
-  --earth-size: 50px;
+  --slider-duration: 8s;
+  --orbit-radius: 100px;
+  --planet-size: 20px;
+  --earth-size: 60px;
+  --earth-light: #64b5f6;
+  --earth-dark: #0d47a1;
 }
 
 /* Reset basico para eliminar margenes y paddings predeterminados */
@@ -216,82 +218,177 @@ main {
   .elemento:nth-child(5) { left: calc(50% + 280px); }
   .elemento:nth-child(6) { left: calc(50% + 420px); opacity: 0; }
 }
-/* Loader sobre el slider */
+/* Loader mejorado */
 .loader {
   position: absolute;
-  top: 1rem; left: 50%;
+  top: 1rem;
+  left: 50%;
   transform: translateX(-50%);
-  width: calc(var(--orbit-radius) * 2);
-  height: calc(var(--orbit-radius) * 2);
-  perspective: 400px;
+  width: calc(var(--orbit-radius) * 2.5);
+  height: calc(var(--orbit-radius) * 2.5);
+  perspective: 1200px;
   z-index: 10;
 }
 
-/* Planeta central estático */
+/* Planeta central con rotación y efecto día/noche */
 .loader .planeta-central {
   position: absolute;
   width: var(--earth-size);
   height: var(--earth-size);
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  background: #007BFF;
   border-radius: 50%;
-  box-shadow: 0 0 15px rgba(0,123,255,0.6);
+  background: linear-gradient(90deg, var(--earth-dark) 0%, var(--earth-light) 50%, var(--earth-dark) 100%);
+  box-shadow: 
+    0 0 20px rgba(100, 181, 246, 0.8),
+    0 0 40px rgba(100, 181, 246, 0.4),
+    inset 10px 0 20px rgba(0, 0, 0, 0.5);
+  animation: rotatePlanet var(--slider-duration) linear infinite;
   z-index: 5;
 }
 
-/* Contenedor de órbitas (sin animar) */
+/* Efecto de atmósfera */
+.loader .planeta-central::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 50%, 
+    rgba(100, 181, 246, 0.3) 0%, 
+    rgba(100, 181, 246, 0.1) 40%, 
+    transparent 70%);
+  box-shadow: inset 0 0 20px rgba(100, 181, 246, 0.4);
+  z-index: -1;
+}
+
+/* Contenedor de órbitas */
 .loader .orbita {
   width: 100%;
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
+  animation: rotateOrbit 20s linear infinite;
 }
 
-/* Cada órbita 3D se anima girando */
+/* Órbitas elípticas con inclinaciones diferentes */
 .loader .orbita3d {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   transform-style: preserve-3d;
-  animation: orbitar var(--slider-duration) linear infinite;
-  transform-origin: center center;
+  animation: orbitar var(--slider-duration) cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
 }
 
-/* Inclinaciones distintas */
-.loader .orb1 { transform: rotateX(60deg); }
-.loader .orb2 { transform: rotateX(30deg); }
-.loader .orb3 { transform: rotateX(75deg); }
-
-/* El satélite que recorre cada órbita */
+/* Satélites con textura y efecto de iluminación */
 .loader .satelite {
   position: absolute;
   width: var(--planet-size);
   height: var(--planet-size);
-  top: 50%; left: calc(50% + var(--orbit-radius));
+  top: 50%;
+  left: calc(50% + var(--orbit-radius));
   transform: translate(-50%, -50%);
-  background: #FFF;
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(255,255,255,0.8);
+  background: linear-gradient(145deg, #e0e0e0, #ffffff);
+  box-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(100, 181, 246, 0.6),
+    inset -5px -5px 10px rgba(0, 0, 0, 0.3);
   z-index: 6;
+  animation: rotateSatellite 4s linear infinite;
 }
 
-/* Pulso de cada satélite */
-.loader .satelite::after {
+/* Efecto de luz que ilumina el planeta */
+.loader .satelite::before {
   content: "";
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  border-radius: inherit;
-  animation: pulse var(--slider-duration) ease-out infinite;
+  top: -50px;
+  left: -50px;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, 
+    rgba(100, 181, 246, 0.3) 0%, 
+    transparent 60%);
+  transform: translate(-25%, -25%);
+  z-index: -1;
+  opacity: 0;
+  animation: pulseLight calc(var(--slider-duration) / 2) ease-in-out infinite;
 }
 
+/* Nueva animación para rotar todo el sistema de órbitas */
+@keyframes rotateOrbit {
+  0% { transform: rotateY(0) rotateX(10deg); }
+  100% { transform: rotateY(360deg) rotateX(10deg); }
+}
+
+/* Animación de órbita elíptica */
 @keyframes orbitar {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% { transform: rotateZ(0) rotateY(20deg) scaleY(0.8); }
+  25% { transform: rotateZ(90deg) rotateY(0) scaleY(1); }
+  50% { transform: rotateZ(180deg) rotateY(-20deg) scaleY(0.8); }
+  75% { transform: rotateZ(270deg) rotateY(0) scaleY(1); }
+  100% { transform: rotateZ(360deg) rotateY(20deg) scaleY(0.8); }
 }
 
-@keyframes pulse {
-  0%   { transform: scale(1);   opacity: 1; }
-  100% { transform: scale(2.5); opacity: 0; }
+/* Rotación del planeta */
+@keyframes rotatePlanet {
+  0% { transform: translate(-50%, -50%) rotateY(0); }
+  100% { transform: translate(-50%, -50%) rotateY(360deg); }
+}
+
+/* Rotación del satélite sobre sí mismo */
+@keyframes rotateSatellite {
+  0% { transform: translate(-50%, -50%) rotateY(0); }
+  100% { transform: translate(-50%, -50%) rotateY(360deg); }
+}
+
+/* Efecto de pulso de luz cuando el satélite está frente al planeta */
+@keyframes pulseLight {
+  0%, 100% { opacity: 0; }
+  25% { opacity: 0.8; }
+  50% { opacity: 0; }
+}
+
+/* Configuración individual de cada órbita */
+.loader .orb1 { 
+  transform: rotateX(70deg) rotateY(20deg);
+  animation-delay: -1s;
+}
+
+.loader .orb2 { 
+  transform: rotateX(30deg) rotateY(-30deg);
+  animation-delay: -3s;
+}
+
+.loader .orb3 { 
+  transform: rotateX(50deg) rotateY(45deg);
+  animation-delay: -5s;
+}
+
+/* Efecto de sombra dinámica en el planeta */
+.loader .planeta-central::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 50%, 
+    transparent 0%, 
+    rgba(0, 0, 0, 0.7) 70%);
+  animation: shadowRotate var(--slider-duration) linear infinite;
+  z-index: 2;
+}
+
+@keyframes shadowRotate {
+  0% { transform: rotateY(0); }
+  100% { transform: rotateY(360deg); }
 }
