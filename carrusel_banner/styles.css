@@ -392,7 +392,7 @@ main {
   0% { transform: rotateY(0); }
   100% { transform: rotateY(360deg); }
 }
-```css
+
 :root {
   --slider-duration: 8s;
   --orbit-radius: 100px;
