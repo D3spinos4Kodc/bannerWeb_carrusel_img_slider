@@ -1,26 +1,52 @@
+// — Variables de configuración —
+const TRANSITION_DURATION = 800; // Duración en milisegundos
+const AUTO_ADVANCE_DELAY = 5000; // Tiempo entre transiciones automáticas
+
 // — Selección del carrusel y función de transición manual —
 const carrusel = document.querySelector('.carrusel');
+let isTransitioning = false;
+let autoAdvanceTimeout = null;
 
 function activar(e) {
-  if (carrusel.classList.contains('transicionando')) return;
+  if (isTransitioning) return;
+  isTransitioning = true;
+  
   const elementos = document.querySelectorAll('.elemento');
-  if (e.target.matches('.siguiente') || e.target.matches('.anterior')) {
-    carrusel.classList.add('transicionando');
-    void carrusel.offsetWidth;
+  const isNext = e.target.matches('.siguiente');
+  
+  // Reiniciar el auto-avance
+  resetAutoAdvance();
+  
+  carrusel.classList.add('transicionando');
+  
+  setTimeout(() => {
+    if (isNext) {
+      carrusel.appendChild(elementos[0]);
+    } else {
+      carrusel.insertBefore(elementos[elementos.length - 1], elementos[0]);
+    }
+    
     setTimeout(() => {
-      if (e.target.matches('.siguiente')) {
-        carrusel.append(elementos[0]);
-      } else {
-        carrusel.prepend(elementos[elementos.length - 1]);
-      }
-      setTimeout(() => {
-        carrusel.classList.remove('transicionando');
-      }, 0);
-    }, 0);
-  }
+      carrusel.classList.remove('transicionando');
+      isTransitioning = false;
+      startAutoAdvance(); // Reanudar auto-avance
+    }, TRANSITION_DURATION);
+    
+  }, TRANSITION_DURATION);
 }
 
-document.addEventListener('click', activar, false);
+// — Control del auto-avance —
+function startAutoAdvance() {
+  autoAdvanceTimeout = setTimeout(() => {
+    if (!isTransitioning) {
+      document.querySelector('.siguiente').click();
+    }
+  }, AUTO_ADVANCE_DELAY);
+}
+
+function resetAutoAdvance() {
+  clearTimeout(autoAdvanceTimeout);
+}
 
 // — Inicialización al cargar la página —
 window.addEventListener('DOMContentLoaded', () => {
@@ -30,18 +56,11 @@ window.addEventListener('DOMContentLoaded', () => {
     (new Image()).src = url;
   });
 
-  // Animación de inicio suave
-  setTimeout(() => {
-    carrusel.classList.add('transicionando');
-    setTimeout(() => carrusel.classList.remove('transicionando'), 900);
-  }, 1000);
+  // Iniciar auto-avance
+  startAutoAdvance();
 
-  // — Loop automático: solo un satélite dispara el cambio —
-  const primeraOrbita = document.querySelector('.orb1');
-  const btnSiguiente = document.querySelector('.siguiente');
-  if (primeraOrbita && btnSiguiente) {
-    primeraOrbita.addEventListener('animationiteration', () => {
-      btnSiguiente.click();
-    });
-  }
+  // Configurar event listeners
+  document.querySelectorAll('.siguiente, .anterior').forEach(btn => {
+    btn.addEventListener('click', activar);
+  });
 });
